@@ -1,18 +1,21 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class InventoryPage:
     def __init__(self, driver):
         self.driver = driver
+        self.wait = WebDriverWait(driver, 10)
 
     def add_to_cart(self, item_name):
-        self.driver.find_element(By.CSS_SELECTOR, f"button[data-test='add-to-cart-{item_name}']").click()
+        self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, f"button[data-test='add-to-cart-{item_name}']"))).click()
 
     def get_cart_badge_count(self):
-        return self.driver.find_element(By.CLASS_NAME, "shopping_cart_badge").text
+        return self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "shopping_cart_badge"))).text
 
     def go_to_cart(self):
-        self.driver.find_element(By.CLASS_NAME, "shopping_cart_link").click()
+        self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "shopping_cart_link"))).click()
 
     def get_page_title(self):
-        return self.driver.find_element(By.CLASS_NAME, "title").text
+        return self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "title"))).text
