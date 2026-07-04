@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 class InventoryPage:
     def __init__(self, driver):
         self.driver = driver
-        self.wait = WebDriverWait(driver, 10)
+        self.wait = WebDriverWait(driver, 15)
 
     def add_to_cart(self, item_name):
         btn = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, f"button[data-test='add-to-cart-{item_name}']")))

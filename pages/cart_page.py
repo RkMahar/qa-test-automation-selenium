@@ -6,10 +6,11 @@ from selenium.webdriver.support import expected_conditions as EC
 class CartPage:
     def __init__(self, driver):
         self.driver = driver
-        self.wait = WebDriverWait(driver, 10)
+        self.wait = WebDriverWait(driver, 15)
 
     def checkout(self):
         self.wait.until(EC.element_to_be_clickable((By.ID, "checkout"))).click()
+        self.wait.until(EC.url_contains("checkout-step-one"))
 
     def fill_checkout_info(self, first_name, last_name, zip_code):
         self.wait.until(EC.presence_of_element_located((By.ID, "first-name"))).send_keys(first_name)
@@ -18,9 +19,11 @@ class CartPage:
 
     def continue_checkout(self):
         self.wait.until(EC.element_to_be_clickable((By.ID, "continue"))).click()
+        self.wait.until(EC.url_contains("checkout-step-two"))
 
     def finish_checkout(self):
         self.wait.until(EC.element_to_be_clickable((By.ID, "finish"))).click()
+        self.wait.until(EC.url_contains("checkout-complete"))
 
     def get_success_message(self):
         return self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "complete-header"))).text
