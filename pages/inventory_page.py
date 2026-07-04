@@ -17,6 +17,7 @@ class InventoryPage:
 
     def go_to_cart(self):
         self.driver.find_element(By.CLASS_NAME, "shopping_cart_link").click()
+        self.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "cart_contents_container")))
 
     def get_page_title(self):
         return self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "title"))).text
