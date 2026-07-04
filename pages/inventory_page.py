@@ -9,13 +9,16 @@ class InventoryPage:
         self.wait = WebDriverWait(driver, 10)
 
     def add_to_cart(self, item_name):
-        self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, f"button[data-test='add-to-cart-{item_name}']"))).click()
+        btn = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, f"button[data-test='add-to-cart-{item_name}']")))
+        btn.click()
+        self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, f"button[data-test='remove-{item_name}']")))
 
     def get_cart_badge_count(self):
         return self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "shopping_cart_badge"))).text
 
     def go_to_cart(self):
         self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "shopping_cart_link"))).click()
+        self.wait.until(EC.url_contains("cart.html"))
 
     def get_page_title(self):
         return self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "title"))).text
