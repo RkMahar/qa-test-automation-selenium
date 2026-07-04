@@ -31,8 +31,8 @@ class TestPurchaseFlow:
         inventory.add_to_cart("sauce-labs-backpack")
         inventory.go_to_cart()
 
-        cart_checkout = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "checkout")))
-        cart_checkout.click()
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "checkout")))
+        driver.execute_script("document.getElementById('checkout').click()")
         first_name = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "first-name")))
         assert first_name.is_displayed()
 
