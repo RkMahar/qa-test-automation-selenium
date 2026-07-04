@@ -9,7 +9,8 @@ class CartPage:
         self.wait = WebDriverWait(driver, 15)
 
     def checkout(self):
-        self.driver.find_element(By.ID, "checkout").click()
+        self.wait.until(EC.presence_of_element_located((By.ID, "checkout")))
+        self.driver.execute_script("document.getElementById('checkout').click()")
         self.wait.until(EC.presence_of_element_located((By.ID, "first-name")))
 
     def fill_checkout_info(self, first_name, last_name, zip_code):
@@ -18,11 +19,11 @@ class CartPage:
         self.driver.find_element(By.ID, "postal-code").send_keys(zip_code)
 
     def continue_checkout(self):
-        self.driver.find_element(By.ID, "continue").click()
+        self.driver.execute_script("document.getElementById('continue').click()")
         self.wait.until(EC.presence_of_element_located((By.ID, "finish")))
 
     def finish_checkout(self):
-        self.driver.find_element(By.ID, "finish").click()
+        self.driver.execute_script("document.getElementById('finish').click()")
         self.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "complete-header")))
 
     def get_success_message(self):
