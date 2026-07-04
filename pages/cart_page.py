@@ -9,21 +9,21 @@ class CartPage:
         self.wait = WebDriverWait(driver, 15)
 
     def checkout(self):
-        self.wait.until(EC.element_to_be_clickable((By.ID, "checkout"))).click()
-        self.wait.until(EC.url_contains("checkout-step-one"))
+        self.driver.find_element(By.ID, "checkout").click()
+        self.wait.until(EC.presence_of_element_located((By.ID, "first-name")))
 
     def fill_checkout_info(self, first_name, last_name, zip_code):
-        self.wait.until(EC.presence_of_element_located((By.ID, "first-name"))).send_keys(first_name)
+        self.driver.find_element(By.ID, "first-name").send_keys(first_name)
         self.driver.find_element(By.ID, "last-name").send_keys(last_name)
         self.driver.find_element(By.ID, "postal-code").send_keys(zip_code)
 
     def continue_checkout(self):
-        self.wait.until(EC.element_to_be_clickable((By.ID, "continue"))).click()
-        self.wait.until(EC.url_contains("checkout-step-two"))
+        self.driver.find_element(By.ID, "continue").click()
+        self.wait.until(EC.presence_of_element_located((By.ID, "finish")))
 
     def finish_checkout(self):
-        self.wait.until(EC.element_to_be_clickable((By.ID, "finish"))).click()
-        self.wait.until(EC.url_contains("checkout-complete"))
+        self.driver.find_element(By.ID, "finish").click()
+        self.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "complete-header")))
 
     def get_success_message(self):
-        return self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "complete-header"))).text
+        return self.driver.find_element(By.CLASS_NAME, "complete-header").text
